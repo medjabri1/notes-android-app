@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/main_dark_gradient_bg"
+    tools:context=".NoteActivity"
+    tools:ignore="hardCodedText, uselessParent, ContentDescription">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:alpha=".4"
+        android:padding="10dp">
+
+        <ImageButton
+            android:onClick="backButtonClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/button_background"
+            android:src="@drawable/ic_arrow_left"/>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:onClick="saveButtonClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/button_background"
+                android:src="@drawable/ic_save"/>
+
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:onClick="deleteButtonClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_background"
+                android:src="@drawable/ic_delete"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha=".1"
+        android:background="@color/addButton"/>
+    
+    <EditText
+        android:id="@+id/new_note_et"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:hint="Note goes here.."
+        android:textColorHint="#33F0F0F0"
+        android:focusedByDefault="true"
+        android:background="@color/colorPrimaryDark"
+        android:paddingTop="20dp"
+        android:paddingBottom="50dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:textColor="@color/textExtraLightColor"
+        android:letterSpacing="0.05"
+        android:textSize="17sp"
+        android:alpha=".7"
+        tools:targetApi="o"
+        tools:ignore="TextFields"
+        android:importantForAutofill="no" />
+
+</LinearLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0B0101</color>
+    <color name="colorPrimaryDark">#020202</color>
+    <color name="colorAccent">#C8CCCF</color>
+
+    <color name="topBarColor">#020202</color>
+
+    <color name="addButton">#DF7C32</color>
+    <color name="addButtonDark">#A14A0A</color>
+
+    <color name="noteItem">#121212</color>
+    <color name="noteItemLight">#151515</color>
+
+    <color name="textLightColor">#F7F7F7</color>
+    <color name="textExtraLightColor">#FCFCFC</color>
+
+</resources>

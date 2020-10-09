@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SplashActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/main_dark_gradient_bg"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:id="@+id/layout_app_title"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:textSize="24sp"
+            android:textColor="@color/addButton"
+            android:text="Notes App"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_developer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developed By"
+            android:textSize="12sp"
+            android:alpha=".3"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MJR"
+            android:alpha=".6"
+            android:textSize="12sp"
+            android:textColor="@color/addButton"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>
