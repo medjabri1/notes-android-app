@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.notesapp.Adapters.NotesAdapter;
 import com.example.notesapp.Classes.Note;
+import com.example.notesapp.Database.DatabaseHelper;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static Context CONTEXT;
 
     NotesAdapter notesAdapter;
+    private static DatabaseHelper databaseHelper;
 
     private static RecyclerView recyclerView;
     private static LinearLayout no_notes_layout;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CONTEXT = MainActivity.this;
+        databaseHelper = new DatabaseHelper(MainActivity.this);
 
         add_new_note_button = findViewById(R.id.add_new_note_button);
         recyclerView = findViewById(R.id.notes_recyclerview);
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         grid_list_button = findViewById(R.id.grid_list_button);
         
         playAnimations();
+        gitNotesFromDB();
         displayNotes();
     }
 
@@ -84,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
             COLUMN_NBR = 2;
         }
         displayNotes();
+    }
+
+    public void gitNotesFromDB() {
+        databaseHelper = new DatabaseHelper(MainActivity.this);
+        notes = databaseHelper.getAllNotes();
     }
 
     public void displayNotes() {
@@ -154,26 +163,34 @@ public class MainActivity extends AppCompatActivity {
         LocalDateTime now = LocalDateTime.now();
         String current_time = dtf.format(now);
 
-        notes.add(0, new Note(id, content, current_time));
+        if(databaseHelper.addOneNote(new Note(id, content, current_time))) {
+            //Success
+            notes.add(0, new Note(id, content, current_time));
+            showToast("New note inserted");
 
-        Objects.requireNonNull(recyclerView.getAdapter()).notifyItemInserted(0);
-        no_notes_layout.setVisibility(View.GONE);
-
-        /*final Handler mHandler = new Handler(Looper.getMainLooper());
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(CONTEXT, content, Toast.LENGTH_SHORT).show();
-            }
-        });*/
+            Objects.requireNonNull(recyclerView.getAdapter()).notifyItemInserted(0);
+            no_notes_layout.setVisibility(View.GONE);
+        } else {
+            //Error
+            showToast("Error inserting new note");
+        }
     }
 
     public static void deleteNote(int note_id) {
         for (int i=0; i<notes.size(); i++) {
             if(notes.get(i).getId()==note_id) {
-                Note remove = notes.remove(i);
-                showToast("Note deleted");
-                Objects.requireNonNull(recyclerView.getAdapter()).notifyItemRemoved(i);
+
+                Note note_to_remove = notes.get(i);
+
+                if(databaseHelper.deleteOneNote(note_to_remove)) {
+                    //Success
+                    Note remove = notes.remove(i);
+                    showToast("Note deleted");
+                    Objects.requireNonNull(recyclerView.getAdapter()).notifyItemRemoved(i);
+                } else {
+                    //Error
+                    showToast("Error removing note");
+                }
             }
         }
     }
@@ -185,10 +202,19 @@ public class MainActivity extends AppCompatActivity {
                 if(!notes.get(i).getContent().equals(content)) {
                     //Content is updated
                     String current_time = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm").format(LocalDateTime.now());
-                    notes.get(i).setContent(content);
-                    notes.get(i).setDate(current_time);
-                    Objects.requireNonNull(recyclerView.getAdapter()).notifyItemChanged(i);
-                    showToast("Note updated");
+                    Note note_to_update = new Note(notes.get(i).getId(), content, current_time);
+
+                    if(databaseHelper.updateNote(note_to_update)) {
+                        //Success
+                        notes.get(i).setContent(content);
+                        notes.get(i).setDate(current_time);
+
+                        Objects.requireNonNull(recyclerView.getAdapter()).notifyItemChanged(i);
+                        showToast("Note updated");
+                    } else {
+                        //Error
+                        showToast("Error updating note");
+                    }
                 } else {
                     //No changes in the note content
                     showToast("No changes detected");
